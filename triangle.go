@@ -5,67 +5,11 @@ import (
     "errors"
 )
 
-var vsSrc = `
-#version 120
-
-attribute vec2 coord2d;
-
-void main(void) {
-    gl_Position = vec4(coord2d, 0.0, 1.0);
-}
-`
-var fsSrc = `
-#version 120
-
-void main(void) {
-    gl_FragColor[0] = 0.8;
-    gl_FragColor[1] = gl_FragCoord.y/320.0;
-    gl_FragColor[2] = gl_FragCoord.x/468.0;
-}
-`
-
 var program gl.Program
 var attrLoc gl.AttribLocation
 
-func loadShader(typ gl.GLenum, src string) (gl.Shader, error) {
-    vs := gl.CreateShader(typ)
-    vs.Source(src)
-    vs.Compile()
-
-    if vs.Get(gl.COMPILE_STATUS) != gl.TRUE {
-        return 0, errors.New("shader compile err")
-    }
-
-    return vs, nil
-}
-
-func createProgram(vsSrc, fsSrc string) (gl.Program, error) {
-    vs, e := loadShader(gl.VERTEX_SHADER, vsSrc)
-
-    if e != nil {
-        return 0, e
-    }
-
-    fs, e := loadShader(gl.FRAGMENT_SHADER, fsSrc)
-
-    if e != nil {
-        return 0, e
-    }
-
-    p := gl.CreateProgram()
-    p.AttachShader(vs)
-    p.AttachShader(fs)
-    p.Link()
-
-    if p.Get(gl.LINK_STATUS) != gl.TRUE {
-        return 0, errors.New("program link")
-    }
-
-    return p, nil
-}
-
 func initTriangleShaders() error {
-    p, e := createProgram(vsSrc, fsSrc)
+    p, e := createProgram("triangle1.v", "triangle1.f")
 
     if e != nil {
         return e

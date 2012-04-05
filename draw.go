@@ -6,10 +6,14 @@ import (
     "github.com/jteeuwen/glfw"
     "time"
     "log"
+    "os"
 )
 
-var esc = true
-var now = time.Now()
+var (
+    esc = true
+    now = time.Now()
+    logger = log.New(os.Stdout, "", 0)
+)
 
 func escHandler(k, state int) {
     if k == glfw.KeyEsc && state == glfw.KeyPress {
