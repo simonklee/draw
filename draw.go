@@ -51,8 +51,6 @@ func main() {
         panic(e.Error())
     }
 
-    glfw.SetWindowTitle("Hello")
-
     if gl.Init() != 0 {
         panic("GL Err")
     }

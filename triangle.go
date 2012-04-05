@@ -39,17 +39,17 @@ func loadShader(typ gl.GLenum, src string) (gl.Shader, error) {
     return vs, nil
 }
 
-func initTriangleShaders() error {
+func createProgram(vsSrc, fsSrc string) (gl.Program, error) {
     vs, e := loadShader(gl.VERTEX_SHADER, vsSrc)
 
     if e != nil {
-        return e
+        return 0, e
     }
 
     fs, e := loadShader(gl.FRAGMENT_SHADER, fsSrc)
 
     if e != nil {
-        return e
+        return 0, e
     }
 
     p := gl.CreateProgram()
@@ -58,7 +58,17 @@ func initTriangleShaders() error {
     p.Link()
 
     if p.Get(gl.LINK_STATUS) != gl.TRUE {
-        return errors.New("program link")
+        return 0, errors.New("program link")
+    }
+
+    return p, nil
+}
+
+func initTriangleShaders() error {
+    p, e := createProgram(vsSrc, fsSrc)
+
+    if e != nil {
+        return e
     }
 
     a := p.GetAttribLocation("coord2d")
