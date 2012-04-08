@@ -1,8 +1,8 @@
 package main
 
 import (
-    "github.com/banthar/gl"
     "errors"
+    "github.com/banthar/gl"
     "io/ioutil"
     "strings"
 )
@@ -57,4 +57,3 @@ func createProgram(vname, fname string) (gl.Program, error) {
 
     return p, nil
 }
-

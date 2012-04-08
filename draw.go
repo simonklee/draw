@@ -4,14 +4,14 @@ import (
     "fmt"
     "github.com/banthar/gl"
     "github.com/jteeuwen/glfw"
-    "time"
     "log"
     "os"
+    "time"
 )
 
 var (
-    esc = true
-    now = time.Now()
+    esc    = true
+    now    = time.Now()
     logger = log.New(os.Stdout, "", 0)
 )
 
